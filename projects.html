@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="date.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive design -->
+    <title>Project Management</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            position: relative; /* Allow absolute positioning for child elements */
+            overflow: hidden; /* Prevent scrollbars */
+            color: white; /* Ensure text is readable on the background */
+            padding: 20px;
+        }
+
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1; /* Ensure video is behind other content */
+            transform: translate(-50%, -50%);
+        }
+
+        .projects {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column; /* Stack input fields */
+            width: 100%; /* Full width */
+            max-width: 400px; /* Limit width */
+        }
+
+        input, textarea {
+            margin: 5px 0; /* Space between inputs */
+            padding: 10px; /* Padding for inputs */
+            border-radius: 5px; /* Rounded corners */
+            border: none; /* Remove border */
+            background-color: rgba(255, 255, 255, 0.8); /* Light background for inputs */
+            color: black; /* Text color */
+        }
+
+        button {
+            margin-top: 10px; /* Space above buttons */
+            padding: 10px; /* Padding for buttons */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #3498db; /* Button color */
+            color: white; /* Button text color */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        button:hover {
+            background-color: #2980b9; /* Darker shade on hover */
+        }
+
+        .projects-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping to the next line */
+            justify-content: center; /* Center the items */
+            max-width: 800px; /* Set a max width for better organization */
+            width: 100%; /* Full width */
+        }
+
+        .project-box {
+            width: 150px; /* Set a fixed width */
+            height: 80px; /* Set a fixed height for the rectangle */
+            margin: 10px; /* Space between projects */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: background-color 0.3s; /* Smooth transition for color change */
+            overflow: hidden; /* Prevent overflow */
+            padding: 5px; /* Add some padding */
+            box-sizing: border-box; /* Include padding in width/height */
+        }
+
+        /* Curved Rectangle */
+        .project-box.rectangle {
+            border-radius: 20px; /* Create a curved rectangle */
+            background-color: #3498db; /* Default color */
+        }
+
+        /* Cylinder */
+        .project-box.cylinder {
+            height: 150px; /* Adjust height for cylinder */
+            border-radius: 75px; /* Create a cylinder form */
+            background-color: #2ecc71; /* Different color for visibility */
+        }
+
+        .project-box:hover {
+            background-color: #2980b9; /* Change color on hover */
+        }
+
+        /* Ensure text fits and wraps */
+        h2, p {
+            font-size: 14px; /* Adjust font size if needed */
+            margin: 0; /* Remove default margin */
+            overflow-wrap: break-word; /* Break long words */
+            word-wrap: break-word; /* Break long words */
+            hyphens: auto; /* Optional: allow hyphenation */
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+        <source src="Office_Background_Video(1080p)..mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="projects">
+        <h1>My Projects</h1>
+        <form id="projectForm">
+            <input type="text" id="project_name" placeholder="Project Name" required>
+            <textarea id="project_description" placeholder="Project Description" required></textarea>
+            <button type="submit">Add Project</button>
+        </form>
+
+        <div class="projects-container" id="projectsContainer"></div>
+
+        <br>
+        <a href="coverpage.html"><button>BACK</button></a>
+    </div>
+
+    <script>
+        let projects = [];
+
+        // Load existing projects from local storage
+        window.onload = function() {
+            const storedProjects = localStorage.getItem('projects');
+            if (storedProjects) {
+                projects = JSON.parse(storedProjects);
+                displayProjects();
+            }
+        };
+
+        document.getElementById('projectForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const name = document.getElementById('project_name').value;
+            const description = document.getElementById('project_description').value;
+
+            // Create a project object
+            const project = {
+                id: projects.length + 1, // Simple ID generation
+                name: name,
+                description: description
+            };
+
+            // Add project to the list
+            projects.push(project);
+            saveProjects();
+            displayProjects();
+            this.reset(); // Clear the form
+        });
+
+        function saveProjects() {
+            localStorage.setItem('projects', JSON.stringify(projects)); // Save to local storage
+        }
+
+        function displayProjects() {
+            const projectsContainer = document.getElementById('projectsContainer');
+            projectsContainer.innerHTML = ''; // Clear previous projects
+
+            projects.forEach((project, index) => {
+                const div = document.createElement('div');
+                div.className = 'project-box ' + (index % 2 === 0 ? 'rectangle' : 'cylinder');
+                div.style.backgroundColor = '#' + Math.floor(Math.random() * 16777215).toString(16); // Random color
+                div.innerHTML = `
+                    <h2>${project.name}</h2>
+                    <p>${project.description}</p>
+                    <a href="#" style="color: white;" onclick="deleteProject(${project.id})">Delete</a>
+                `;
+                projectsContainer.appendChild(div);
+            });
+        }
+
+        function deleteProject(id) {
+            projects = projects.filter(project => project.id !== id); // Remove project
+            saveProjects(); // Save changes to local storage
+            displayProjects(); // Update the displayed list
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="date.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive design -->
+    <title>Your Title Here</title>
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+        <source src="Smart_City_Digital_City_Video(1080p)..mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="coverpage">
+        <h2>
+            <a href="personal info.html">PERSONAL INFO</a>
+            <br>
+            <a href="Education.html">EDUCATION</a>
+            <br>
+            <a href="work experience.html">WORK</a>
+            <br>
+            <a href="skills.html">SKILLS</a>
+            <br>
+            <a href="projects.html">PROJECTS</a>
+            <br>
+            <a href="contacts.html">CONTACTS</a>
+        </h2>
+
+        <a href="index.html"><button>BACK</button></a>
+    </div>
+
+    <script>
+        // Set the video background to cover the entire viewport
+        const video = document.querySelector('.background-video');
+        video.style.position = 'absolute';
+        video.style.top = '50%';
+        video.style.left = '50%';
+        video.style.minWidth = '100%';
+        video.style.minHeight = '100%';
+        video.style.width = 'auto';
+        video.style.height = 'auto';
+        video.style.zIndex = '-1'; // Ensure video is behind other content
+        video.style.transform = 'translate(-50%, -50%)'; // Center the video
+
+        // Adjust the coverpage container to be centered
+        const coverpage = document.querySelector('.coverpage');
+        coverpage.style.position = 'relative';
+        coverpage.style.zIndex = '1'; // Ensure content is above the video
+        coverpage.style.textAlign = 'center'; // Center text
+        coverpage.style.color = 'white'; // Ensure text is readable
+        coverpage.style.padding = '20px'; // Add some padding
+    </script>
+</body>
+</html>

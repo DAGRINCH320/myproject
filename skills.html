@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Skills Portfolio</title>
+    <link rel="stylesheet" href="date.css"> <!-- Link to your existing CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+        }
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        main {
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        #skills {
+            text-align: center;
+        }
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .skill-box {
+            display: flex;
+            flex-direction: column;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+            width: 150px;
+            height: 100px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            justify-content: space-between;
+            background-color: #ff6f81; /* Pink background for skill boxes */
+        }
+        .skill-box:hover {
+            transform: scale(1.05);
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        input, textarea {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="skills">
+    <div class="video-background">
+        <video autoplay muted loop class="background-video">
+            <source src="Office_Background_Video(1080p)..mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <main>
+        <section id="skills">
+            <h1>My Skills</h1>
+            <form id="skillForm">
+                <input type="text" id="skillName" placeholder="Skill Name" required>
+                <textarea id="skillDescription" placeholder="Skill Description" required></textarea>
+                <button type="submit">Add Skill</button>
+            </form>
+            <div class="skills-container" id="skillsContainer"></div>
+        </section>
+    </main>
+    <br>
+    <a href="coverpage.html"><button>BACK</button></a>
+
+    <script>
+        const skillsContainer = document.getElementById('skillsContainer');
+        const skillForm = document.getElementById('skillForm');
+        const skillNameInput = document.getElementById('skillName');
+        const skillDescriptionInput = document.getElementById('skillDescription');
+
+        // Load skills from localStorage
+        function loadSkills() {
+            const skills = JSON.parse(localStorage.getItem('skills')) || [];
+            skillsContainer.innerHTML = '';
+
+            skills.forEach((skill, index) => {
+                const skillBox = document.createElement('div');
+                skillBox.className = 'skill-box';
+                skillBox.style.backgroundColor = getRandomColor();
+                skillBox.innerHTML = `
+                    <h2>${skill.name}</h2>
+                    <p>${skill.description}</p>
+                    <button onclick="deleteSkill(${index})" style="color: white;">Delete</button>
+                `;
+                skillsContainer.appendChild(skillBox);
+            });
+        }
+
+        // Add a skill
+        skillForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const name = skillNameInput.value;
+            const description = skillDescriptionInput.value;
+
+            const skills = JSON.parse(localStorage.getItem('skills')) || [];
+            skills.push({ name, description });
+            localStorage.setItem('skills', JSON.stringify(skills));
+
+            skillNameInput.value = '';
+            skillDescriptionInput.value = '';
+            loadSkills();
+        });
+
+        // Delete a skill
+        function deleteSkill(index) {
+            const skills = JSON.parse(localStorage.getItem('skills')) || [];
+            skills.splice(index, 1);
+            localStorage.setItem('skills', JSON.stringify(skills));
+            loadSkills();
+        }
+
+        // Get a random color for skill boxes
+        function getRandomColor() {
+            const colors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bfbcf', '#a0c4ff', '#b9fbc0', '#ffc3a0'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Initial load
+        loadSkills();
+    </script>
+</body>
+</html>

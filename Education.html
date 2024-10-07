@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="date.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive design -->
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            position: relative; /* Allow absolute positioning for child elements */
+            overflow: hidden; /* Prevent scrollbars */
+        }
+
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1; /* Ensure video is behind other content */
+            transform: translate(-50%, -50%);
+        }
+
+        .education {
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background for readability */
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px; /* Limit the width of the form */
+            margin: auto; /* Center the form */
+            margin-top: 100px; /* Space from the top */
+            position: relative; /* Position relative for layering */
+            z-index: 1; /* Ensure form is above the video */
+        }
+
+        h2 {
+            text-align: center; /* Center the heading */
+            color: white; /* White text for visibility */
+        }
+
+        button {
+            margin-top: 10px; /* Space above buttons */
+            width: 100%; /* Full width buttons */
+            padding: 10px; /* Padding for buttons */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: #3498db; /* Button color */
+            color: white; /* Button text color */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        button:hover {
+            background-color: #2980b9; /* Darker shade on hover */
+        }
+
+        label {
+            color: white; /* White label text */
+        }
+
+        input {
+            width: calc(100% - 10px); /* Full width minus padding */
+            padding: 5px; /* Padding for input fields */
+            margin-top: 5px; /* Space above input fields */
+            border-radius: 5px; /* Rounded corners */
+            border: none; /* Remove border */
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield; /* Hide number input spinner */
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none; /* Hide number input spinner for WebKit browsers */
+            margin: 0; /* Remove margin */
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+        <source src="Office_Background_Video(1080p)..mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="education">
+        <h2>EDUCATION</h2>
+
+        <form id="educationForm">
+            <label for="university">UNIVERSITY OF</label>
+            <input type="text" id="university" name="university" value="LIMPOPO" required>
+            
+            <label for="high_school">HIGH SCHOOL</label>
+            <input type="text" id="high_school" name="high_school" value="ST AUGUSTINE RESIDENTIAL SCHOOL" required>
+            
+            <label for="highest_grade_passed">HIGHEST GRADE</label>
+            <input type="number" id="highest_grade_passed" name="highest_grade_passed" value="12" required>
+            
+            <label for="degree">DEGREE</label>
+            <input type="text" id="degree" name="degree" value="BSC MATHEMATICAL SCIE" required>
+            
+            <input type="hidden" id="user_id" name="user_id" value="1"> <!-- Example user_id, adjust as needed -->
+            
+            <button type="submit">Submit</button>
+        </form>
+
+        <br><a href="coverpage.html"><button>BACK</button></a>
+    </div>
+
+    <script>
+        document.getElementById('educationForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            
+            // Simulating data submission
+            const userId = document.getElementById('user_id').value;
+            const university = document.getElementById('university').value;
+            const highSchool = document.getElementById('high_school').value;
+            const highestGradePassed = document.getElementById('highest_grade_passed').value;
+            const degree = document.getElementById('degree').value;
+
+            // Simulate a successful submission (you can add your logic here)
+            alert('Record created successfully:\n' +
+                  'User ID: ' + userId + '\n' +
+                  'University: ' + university + '\n' +
+                  'High School: ' + highSchool + '\n' +
+                  'Highest Grade: ' + highestGradePassed + '\n' +
+                  'Degree: ' + degree);
+        });
+    </script>
+</body>
+</html>

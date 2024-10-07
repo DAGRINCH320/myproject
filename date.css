@@ -1,0 +1,141 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative; /* Allow absolute positioning of child elements */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px; /* Increased padding */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%; /* Increased width to 90% */
+    max-width: 600px;
+    z-index: 1; /* Ensure it is above the background video */
+}
+
+.background-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1; 
+    transform: translate(-50%, -50%);
+}
+
+.background-image {
+    background-image: url('edu.jpg'); /* Your background image path */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover; 
+    height: 100%; 
+    width: 100%; 
+    position: absolute;
+    z-index: -2; /* Behind everything else */
+}
+
+button {
+    display: flex;
+    gap: 20px;
+    color: rgb(247, 16, 120);
+    font-size: 1rem;
+    padding: 10px 30px;
+    background: rgb(142, 168, 167);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgb(147, 171, 175);
+    transition: 1s;
+    margin-top: 20px; /* Space between button and form */
+}
+
+h1 {
+    font-size: 3em;
+    text-shadow: 2px 2px 4px aqua;
+    animation: fadeIn 3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; } /* Changed to 1 for full visibility */
+}
+
+button:hover {
+    box-shadow: 0 0 5px aqua,
+    0 0 5px aqua, 0 0 5px aqua,
+    0 0 100px aqua;
+}
+
+.caption {
+    font-size: 2em; 
+    text-align: center;
+    color: rgb(247, 247, 252);
+    font-style: italic;
+}
+
+h2 {
+    text-align: center; 
+    font-size: 2em; 
+    color: rgb(25, 17, 20); 
+    margin-bottom: 20px;
+}
+
+h2:hover {
+    color: rgb(149, 184, 181); 
+}
+
+/* Additional styling for inputs and form */
+input.editable {
+    font-size: 1em; 
+    padding: 10px; 
+    width: 100%; 
+    max-width: 500px; 
+    margin-bottom: 20px; 
+}
+
+textarea.editable {
+    width: 100%; 
+    max-width: 500px; 
+    padding: 10px; 
+    margin-bottom: 20px; 
+    resize: none; 
+}
+
+/* Further styling adjustments */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%; 
+    padding: 15px; 
+    margin: 10px 0; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    font-size: 1rem; 
+}
+
+.register-button {
+    width: 100%; 
+    padding: 15px; 
+    background-color: #28a745; 
+    color: white; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.register-button:hover {
+    background-color: #218838; 
+}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work Experience</title>
+    <link rel="stylesheet" href="date.css"> <!-- Link to your date.css file -->
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: white; /* Change text color to white for better contrast */
+            position: relative;
+            overflow: hidden;
+            height: 100vh; /* Full height */
+            display: flex;
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            
+        }
+
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row; /* Display in a row */
+            align-items: flex-start; /* Align items at the start */
+            max-width: 1200px; /* Max width for the container */
+            width: 100%; /* Full width */
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1; /* Bring the container above the video */
+        }
+
+        h1 {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px; /* Space below heading */
+        }
+
+        h2 {
+            text-align: center;
+            margin: 20px 0; /* Space above and below subheading */
+        }
+
+        .experience {
+            margin: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8); /* Light background for experiences */
+            color: black; /* Dark text color for better contrast */
+            transition: transform 0.2s; /* Animation effect */
+            width: 180px; /* Fixed width for experience boxes */
+            display: flex; /* Flex display to arrange items */
+            flex-direction: column; /* Stack items vertically */
+            justify-content: space-between; /* Space items out */
+        }
+
+        .experience:hover {
+            transform: scale(1.02); /* Slightly enlarge on hover */
+        }
+
+        .delete {
+            color: red;
+            cursor: pointer;
+            align-self: flex-end; /* Align delete to the right */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column; /* Stack form items vertically */
+            margin-right: 20px; /* Space between form and experiences */
+        }
+
+        form input, form textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8); /* Light background for inputs */
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #218838;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+        .experienceList {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping of experience boxes */
+            justify-content: flex-start; /* Align experience boxes to the left */
+        }
+    </style>
+</head>
+<body>
+    <div class="work-experience-page">
+    <video autoplay muted loop class="background-video">
+        <source src="Office_Background_Video(1080p)..mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="container">
+        <form id="experienceForm">
+            <h1>Work Experience</h1>
+            <input type="text" id="title" placeholder="Job Title" required>
+            <input type="text" id="company" placeholder="Company Name" required>
+            <input type="date" id="start_date" required>
+            <input type="date" id="end_date" required>
+            <textarea id="description" placeholder="Job Description" required></textarea>
+            <button type="submit">Add Experience</button>
+        </form>
+
+        <div class="experienceList" id="experienceList"></div>
+
+        <button class="back-button" onclick="goBack()">BACK</button>
+    </div>
+
+    <script>
+        let experiences = [];
+
+        document.getElementById('experienceForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get values from the form
+            const title = document.getElementById('title').value;
+            const company = document.getElementById('company').value;
+            const startDate = document.getElementById('start_date').value;
+            const endDate = document.getElementById('end_date').value;
+            const description = document.getElementById('description').value;
+
+            // Create an experience object
+            const experience = {
+                id: experiences.length + 1, // Simple ID generation
+                title: title,
+                company: company,
+                start_date: startDate,
+                end_date: endDate,
+                description: description
+            };
+
+            // Add experience to the list
+            experiences.push(experience);
+            displayExperiences();
+            this.reset(); // Clear the form
+        });
+
+        function displayExperiences() {
+            const experienceList = document.getElementById('experienceList');
+            experienceList.innerHTML = ''; // Clear previous list
+
+            experiences.forEach((exp, index) => {
+                const div = document.createElement('div');
+                div.className = 'experience';
+                div.style.backgroundColor = index % 2 === 0 ? '#3498db' : '#2ecc71'; // Alternate colors
+                div.innerHTML = `
+                    <strong>${exp.title}</strong> at ${exp.company}<br>
+                    ${exp.start_date} - ${exp.end_date}<br>
+                    <p>${exp.description}</p>
+                    <span class="delete" onclick="deleteExperience(${exp.id})">Delete</span>
+                `;
+                experienceList.appendChild(div);
+            });
+        }
+
+        function deleteExperience(id) {
+            experiences = experiences.filter(exp => exp.id !== id); // Remove experience
+            displayExperiences(); // Update the displayed list
+        }
+
+        function goBack() {
+            window.location.href = 'coverpage.html'; // Redirect to the cover page
+        }
+    </script>
+</body>
+</html>

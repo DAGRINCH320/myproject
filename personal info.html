@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Details</title>
+    <link rel="stylesheet" href="date.css">
+    <style>
+      
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="background-video">
+        <source src="Office_Background_Video(1080p)..mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="personal-info-page">
+        <div class="container">
+            <h1>Enter Your Details</h1>
+
+            <form id="detailsForm">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" class="editable" required>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="editable" required>
+
+                <label for="date_of_birth">Date of Birth</label>
+                <input type="date" id="date_of_birth" name="date_of_birth" class="editable" required>
+
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" class="editable">
+
+                <label for="bio">Biography</label>
+                <textarea id="bio" name="bio" class="editable" rows="6" required></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+            <br>
+            <a href="coverpage.html"><button>BACK</button></a>
+        </div>
+
+        <script>
+            // Load saved data from local storage
+            window.onload = function() {
+                const name = localStorage.getItem('name');
+                const email = localStorage.getItem('email');
+                const dateOfBirth = localStorage.getItem('date_of_birth');
+                const address = localStorage.getItem('address');
+                const bio = localStorage.getItem('bio');
+
+                if (name) document.getElementById('name').value = name;
+                if (email) document.getElementById('email').value = email;
+                if (dateOfBirth) document.getElementById('date_of_birth').value = dateOfBirth;
+                if (address) document.getElementById('address').value = address;
+                if (bio) document.getElementById('bio').value = bio;
+            };
+
+            // Handle form submission
+            document.getElementById('detailsForm').onsubmit = function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Save data to local storage
+                localStorage.setItem('name', document.getElementById('name').value);
+                localStorage.setItem('email', document.getElementById('email').value);
+                localStorage.setItem('date_of_birth', document.getElementById('date_of_birth').value);
+                localStorage.setItem('address', document.getElementById('address').value);
+                localStorage.setItem('bio', document.getElementById('bio').value);
+
+                alert('Details saved successfully!');
+            };
+        </script>
+    </div>
+</body>
+</html>
